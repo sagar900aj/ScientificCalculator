@@ -125,7 +125,7 @@ class CalculatorApp:
         self._bind_keys()
 
     def _build_ui(self) -> None:
-        frame = tk.Frame(self.root, bg="#222831")
+        frame = tk.Frame(self.root, bg="#1C1E20")
         frame.pack(fill=tk.BOTH, expand=True, padx=12, pady=12)
 
 
@@ -135,22 +135,22 @@ class CalculatorApp:
             textvariable=self.expr_var,
             font=entry_font,
             bd=0,
-            bg="#393E46",
-            fg="#EEEEEE",
+            bg="#202124",
+            fg="#000000",
             justify=tk.RIGHT,
             insertwidth=0,
         )
-        display.pack(fill=tk.X, ipady=18, pady=(0, 12))
+        display.pack(fill=tk.X, ipady=14, pady=(0, 12))
         display.configure(state="normal")
         self.display = display
 
         btn_cfg = dict(
-            font=("Segoe UI", 14),
+            font=("Segoe UI", 16, "bold"),
             bd=0,
-            fg="#222831",
+            fg="#A0A0A0",
             relief=tk.FLAT,
             activebackground="#00ADB5",
-            bg="#EEEEEE",
+            bg="#2B2726",
         )
 
         # Buttons layout
@@ -165,14 +165,25 @@ class CalculatorApp:
             ["log", "ln", "x²", "="],
         ]
 
-        grid = tk.Frame(frame, bg="#222831")
+        grid = tk.Frame(frame, bg="#000000")
         grid.pack(fill=tk.BOTH, expand=True)
 
         for r, row in enumerate(buttons):
             for c, char in enumerate(row):
                 cfg = btn_cfg.copy()
                 if char == "=":
-                    cfg.update(bg="#00ADB5", fg="#ffffff", font=("Segoe UI", 16, "bold"))
+                    cfg.update(bg="#37676D", fg="#B2D1D3", font=("Segoe UI", 15, "bold"))
+                if char == "AC":
+                    cfg.update(bg="#242120", fg="#B35050", font=("Segoe UI", 15, "bold"))
+                if char == "DEL":
+                    cfg.update(bg="#242120", fg="#996427", font=("Segoe UI", 15, "bold"))
+                if char in ["√","^","%","+", "-", "×", "÷","e"]:
+                    cfg.update(bg="#242120", fg="#4BA2B9", font=("Segoe UI", 15, "bold"))
+                if char in []:
+                    cfg.update(bg="#242120", fg="#FFFFFF", font=("Segoe UI", 15, "bold"))
+                if char in ["log", "ln","x²","sin", "cos", "tan"]:
+                    cfg.update(bg="#242120", fg="#2C634C", font=("Segoe UI", 15, "bold"))
+
                 btn = tk.Button(grid, text=char, command=lambda ch=char: self.on_button(ch), **cfg)
                 btn.grid(row=r, column=c, padx=6, pady=6, sticky="nsew")
 
