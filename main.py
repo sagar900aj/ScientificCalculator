@@ -136,7 +136,7 @@ class CalculatorApp:
             font=entry_font,
             bd=0,
             bg="#202124",
-            fg="#000000",
+            fg="#BEBEBE",
             justify=tk.RIGHT,
             insertwidth=0,
         )
