@@ -17,7 +17,6 @@ class SafeEval(ast.NodeVisitor):
         "sqrt": math.sqrt,
         "sqr": lambda x: x * x,
         "pow": math.pow,
-        "log10": math.log10,
         "ln": math.log,
         "log": math.log10,
     }
@@ -162,8 +161,8 @@ class CalculatorApp:
             ["1", "2", "3", "+"],
             ["!", "0", ".", "^"],
             ["(", ")", "π", "e"],
-            ["sin", "cos", "tan", "sqrt"],
-            ["log10", "ln", "sqr", "="],
+            ["sin", "cos", "tan", "√"],
+            ["log", "ln", "x²", "="],
         ]
 
         grid = tk.Frame(frame, bg="#222831")
@@ -196,6 +195,24 @@ class CalculatorApp:
             if expr.startswith("Error"):
                 self.expr_var.set("")
                 return
+            if expr.startswith("sin("):
+                self.expr_var.set("")
+                return
+            if expr.startswith("cos("):
+                self.expr_var.set("")
+                return
+            if expr.startswith("tan("):
+                self.expr_var.set("")
+                return
+            if expr.startswith("√("):
+                self.expr_var.set("")
+                return
+            if expr.startswith("log("):
+                self.expr_var.set("")
+                return
+            if expr.startswith("ln("):
+                self.expr_var.set("")
+                return
             if self.display.selection_present():
                 start = self.display.index("sel.first")
                 end = self.display.index("sel.last")
@@ -213,7 +230,7 @@ class CalculatorApp:
         if key == "!":
             self._apply_factorial()
             return
-        if key in ("sin", "cos", "tan", "sqrt", "log10", "ln"):
+        if key in ("sin", "cos", "tan", "√", "log", "ln"):
             insert_pos = self.display.index("sel.first") if self.display.selection_present() else self.display.index(tk.INSERT)
             left_text = self.display.get()[:insert_pos]
             if left_text.endswith(f"{key}("):
@@ -224,9 +241,11 @@ class CalculatorApp:
             self._insert("pi")
             return
         if key == "e":
-            self._insert("e")
-            return
-        if key == "sqr":
+            insert_pos = self.display.index("sel.first") if self.display.selection_present() else self.display.index(tk.INSERT)
+            left_text = self.display.get()[:insert_pos]
+            if left_text.endswith("e"):
+                return
+        if key == "x²":
             self._insert("**2")
             return
         # Map symbols
@@ -241,6 +260,24 @@ class CalculatorApp:
 
         # If currently showing an error, clear instead
         if s.startswith("Error"):
+            self.expr_var.set("")
+            return
+        if s.startswith("sin("):
+            self.expr_var.set("")
+            return
+        if s.startswith("cos("):
+            self.expr_var.set("")
+            return
+        if s.startswith("tan("):
+            self.expr_var.set("")
+            return
+        if s.startswith("√("):
+            self.expr_var.set("")
+            return
+        if s.startswith("log("):
+            self.expr_var.set("")
+            return
+        if s.startswith("ln("):
             self.expr_var.set("")
             return
 
